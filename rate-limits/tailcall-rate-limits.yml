@@ -1,0 +1,68 @@
+name: Tailcall / ForgeCode Rate Limits
+description: >-
+  Rate limit information for Tailcall's products. The open-source GraphQL
+  runtime has no platform-imposed rate limits — limits are solely determined
+  by the operator's infrastructure and upstream API providers. ForgeCode, the
+  commercial CLI product, enforces daily AI request quotas per subscription tier.
+version: "0.1"
+created: "2026-06-13"
+modified: "2026-06-13"
+
+products:
+  - name: Tailcall GraphQL Runtime (Self-Hosted)
+    description: >-
+      No rate limits imposed by Tailcall Inc. The runtime itself supports
+      configurable upstream timeouts, connection pool sizes, and request
+      batching windows via .graphql DSL directives. Operators set their own
+      limits based on infrastructure capacity and upstream API constraints.
+    platformLimits: none
+    configurableControls:
+      - name: "@upstream timeout"
+        description: Per-upstream HTTP request timeout in milliseconds
+        directive: "@upstream(timeout: <ms>)"
+      - name: "@upstream poolSize"
+        description: HTTP connection pool size per upstream
+        directive: "@upstream(poolSize: <n>)"
+      - name: "@batch"
+        description: Batch window and size for N+1 query coalescing
+        directive: "@batch(delay: <ms>, maxSize: <n>)"
+      - name: "@cache"
+        description: Response cache TTL for upstream HTTP calls
+        directive: "@cache(maxAge: <seconds>)"
+    notes: >-
+      Rate limits from upstream REST/gRPC/GraphQL APIs still apply. Tailcall
+      passes through HTTP 429 responses from upstreams. Operators should
+      configure appropriate retry and circuit-breaker logic at the infrastructure
+      layer (e.g., AWS API Gateway throttling, Cloudflare rate limiting).
+
+  - name: ForgeCode Free Tier
+    description: Dynamic daily AI request limit based on server load.
+    limits:
+      - scope: daily
+        quantity: "10–50"
+        unit: AI requests
+        enforcement: soft (dynamic, load-dependent)
+        resetPeriod: 24 hours (rolling)
+    notes: >-
+      The free tier limit fluctuates with overall platform load. No hard SLA
+      is provided for free users during peak demand periods.
+
+  - name: ForgeCode Pro Tier
+    description: Fixed daily AI request quota for Pro subscribers.
+    limits:
+      - scope: daily
+        quantity: 1000
+        unit: AI requests
+        enforcement: hard
+        resetPeriod: 24 hours (rolling)
+    notes: Pro users receive priority access during high server load periods.
+
+  - name: ForgeCode Max Tier
+    description: Fixed daily AI request quota for Max subscribers.
+    limits:
+      - scope: daily
+        quantity: 5000
+        unit: AI requests
+        enforcement: hard
+        resetPeriod: 24 hours (rolling)
+    notes: Max tier receives highest throughput allocation on the platform.

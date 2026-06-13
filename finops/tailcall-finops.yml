@@ -1,0 +1,125 @@
+name: Tailcall FinOps Framework
+description: >-
+  FinOps cost visibility and optimization guidance for teams using Tailcall's
+  open-source GraphQL runtime and/or ForgeCode commercial product. Tailcall's
+  self-hosted runtime shifts infrastructure costs to the operator's cloud bill;
+  ForgeCode adds a predictable SaaS subscription cost per developer seat.
+version: "1.0"
+created: "2026-06-13"
+modified: "2026-06-13"
+framework: FinOps Framework 1.0
+
+domains:
+  - name: Understand
+    description: Gain visibility into Tailcall-related cloud and SaaS spend.
+    practices:
+      - name: Map Tailcall runtime infrastructure costs
+        description: >-
+          Tag all compute resources (Lambda functions, ECS tasks, EC2 instances,
+          Cloudflare Workers) running the Tailcall GraphQL runtime with a shared
+          cost tag (e.g., product=tailcall-gateway). This enables accurate
+          attribution in AWS Cost Explorer, GCP Billing, or Azure Cost Management.
+        effort: low
+        tools:
+          - AWS Resource Tagging
+          - Cloudflare Analytics
+          - Datadog APM
+
+      - name: Track upstream API costs amplified by the gateway
+        description: >-
+          Because Tailcall composes multiple upstream APIs, a single GraphQL
+          query can fan out to many upstream HTTP calls. Monitor upstream API
+          costs (third-party API fees, egress charges) and correlate them with
+          GraphQL operation traffic through Tailcall's access logs.
+        effort: medium
+        tools:
+          - Tailcall access logs (stdout / file sink)
+          - AWS Cost and Usage Report
+          - Custom dashboards on request counts per upstream
+
+      - name: Track ForgeCode SaaS spend per developer
+        description: >-
+          ForgeCode is billed per-seat. Maintain an inventory of active
+          ForgeCode licenses (Free / Pro $20/mo / Max $100/mo) and align
+          seat counts with active engineering headcount monthly.
+        effort: low
+        tools:
+          - ForgeCode billing dashboard (forgecode.dev)
+          - Internal HRIS / engineering roster
+
+  - name: Optimize
+    description: Reduce waste and right-size Tailcall infrastructure and licensing.
+    practices:
+      - name: Enable response caching to cut upstream API calls
+        description: >-
+          Use Tailcall's @cache directive to cache upstream HTTP responses.
+          Cached responses avoid redundant upstream calls, reducing both
+          latency and per-call upstream API fees. Set maxAge based on data
+          freshness requirements per field.
+        effort: low
+        impact: high
+        example: "@cache(maxAge: 300)"
+
+      - name: Enable request batching to reduce N+1 fan-out
+        description: >-
+          Configure @batch directives on list resolvers to coalesce multiple
+          upstream HTTP requests into a single batched call. This directly
+          reduces upstream API call volume and associated costs.
+        effort: low
+        impact: high
+        example: "@batch(delay: 5, maxSize: 100)"
+
+      - name: Right-size compute for the Tailcall runtime
+        description: >-
+          Tailcall is written in Rust and is highly CPU- and memory-efficient.
+          Benchmark your p99 latency and throughput on smaller instance types
+          (e.g., ARM Graviton on AWS) before provisioning over-sized VMs.
+          Use AWS Lambda@Edge or Cloudflare Workers for bursty workloads to
+          avoid idle compute costs.
+        effort: medium
+        impact: medium
+
+      - name: Downgrade ForgeCode seats for low-usage developers
+        description: >-
+          Review ForgeCode daily request utilization. Developers consistently
+          under 50 requests/day may be adequately served by the Free tier,
+          saving $20–$100/month per seat.
+        effort: low
+        impact: medium
+
+  - name: Operate
+    description: Ongoing FinOps operational cadence for Tailcall environments.
+    practices:
+      - name: Monthly infrastructure cost review
+        description: >-
+          Review tagged Tailcall gateway compute costs monthly. Compare
+          against prior month and correlate with GraphQL request volume changes.
+          Identify cost-per-request trends.
+        cadence: monthly
+
+      - name: Quarterly ForgeCode seat audit
+        description: >-
+          Audit active ForgeCode subscriptions against engineering roster.
+          Remove seats for departed or inactive users. Adjust tier (Pro vs Max)
+          based on actual daily usage data from the ForgeCode dashboard.
+        cadence: quarterly
+
+      - name: Upstream API spend alerting
+        description: >-
+          Set budget alerts on upstream API provider spend (e.g., AWS API Gateway,
+          third-party REST APIs). Alert when monthly spend exceeds 110% of prior
+          month's baseline to catch unexpected query fan-out spikes early.
+        cadence: continuous
+
+cost_model:
+  tailcall_runtime:
+    licensing: free (Apache 2.0 open source)
+    infrastructure: operator-paid (cloud compute, egress, Lambda invocations)
+    upstream_apis: operator-paid (varies by upstream provider pricing)
+
+  forgecode:
+    free: "$0/month — 10–50 AI requests/day"
+    pro: "$20/month — 1,000 AI requests/day"
+    max: "$100/month — 5,000 AI requests/day"
+    billing_model: flat-rate monthly subscription per seat
+    url: https://forgecode.dev/blog/graduating-from-early-access-new-pricing-tiers-available/

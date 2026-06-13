@@ -1,0 +1,83 @@
+name: Tailcall / ForgeCode Plans and Pricing
+description: >-
+  Tailcall's core GraphQL runtime (tailcallhq/tailcall) is fully open-source
+  under the Apache 2.0 license with no usage tiers or charges. Tailcall Inc's
+  commercial product, ForgeCode, operates on a SaaS subscription model with
+  three tiers based on daily AI request volume.
+version: "0.1"
+created: "2026-06-13"
+modified: "2026-06-13"
+
+plans:
+  - name: Tailcall GraphQL Runtime (Open Source)
+    description: >-
+      The core GraphQL gateway runtime is free and open-source (Apache 2.0).
+      Self-hosted on any infrastructure — bare metal, Docker, AWS Lambda,
+      Cloudflare Workers. No request limits, no per-seat charges.
+    type: open-source
+    price: 0
+    currency: USD
+    period: none
+    features:
+      - Unlimited GraphQL schema composition from REST/gRPC/GraphQL upstreams
+      - Declarative .graphql DSL configuration
+      - HTTP caching and request batching
+      - Automatic N+1 query detection
+      - Static schema validation
+      - CLI management tools
+      - AWS Lambda and Cloudflare Workers support
+      - Apache 2.0 license — full commercial use permitted
+    rateLimits: none
+    url: https://github.com/tailcallhq/tailcall
+
+  - name: ForgeCode Free
+    description: >-
+      Permanent free tier for the ForgeCode CLI coding harness. Request limit
+      is dynamic and adjusts based on server load.
+    type: free
+    price: 0
+    currency: USD
+    period: monthly
+    features:
+      - Access to ForgeCode CLI coding harness
+      - Multi-model support (300+ models via OpenRouter, OpenAI, Anthropic, etc.)
+      - ZSH terminal integration
+      - Dynamic daily request limit (typically 10–50 requests/day)
+    rateLimits:
+      requests: "10–50 per day (dynamic, load-dependent)"
+    url: https://forgecode.dev
+
+  - name: ForgeCode Pro
+    description: >-
+      For regular developers scaling their AI-assisted coding workflow. Provides
+      up to 1,000 AI requests per day at a fixed monthly rate.
+    type: paid
+    price: 20
+    currency: USD
+    period: monthly
+    features:
+      - All Free tier features
+      - Up to 1,000 AI requests per day
+      - Priority access during high load
+      - Multi-agent architecture (FORGE, MUSE, SAGE sub-agents)
+      - Large codebase context engine
+    rateLimits:
+      requests: "1,000 per day"
+    url: https://forgecode.dev/blog/graduating-from-early-access-new-pricing-tiers-available/
+
+  - name: ForgeCode Max
+    description: >-
+      For power users with heavy, consistent AI coding usage requiring up to
+      5,000 AI requests per day.
+    type: paid
+    price: 100
+    currency: USD
+    period: monthly
+    features:
+      - All Pro tier features
+      - Up to 5,000 AI requests per day
+      - Maximum throughput allocation
+      - Full multi-agent and multi-model flexibility
+    rateLimits:
+      requests: "5,000 per day"
+    url: https://forgecode.dev/blog/graduating-from-early-access-new-pricing-tiers-available/
