@@ -1,0 +1,108 @@
+{
+  "@context": {
+    "@version": 1.1,
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "schema": "https://schema.org/",
+    "apis": "https://apis.io/vocab/",
+
+    "name": "schema:name",
+    "description": "schema:description",
+    "url": "schema:url",
+    "image": "schema:image",
+    "dateCreated": {"@id": "schema:dateCreated", "@type": "xsd:date"},
+    "dateModified": {"@id": "schema:dateModified", "@type": "xsd:date"},
+
+    "Provider": "schema:Organization",
+    "API": "schema:WebAPI",
+    "BlogPosting": "schema:BlogPosting",
+    "SoftwareApplication": "schema:SoftwareApplication",
+    "SoftwareSourceCode": "schema:SoftwareSourceCode",
+
+    "provider": {"@id": "apis:provider", "@type": "@id"},
+    "humanURL": {"@id": "schema:url", "@type": "@id"},
+    "baseURL": {"@id": "schema:url", "@type": "@id"},
+    "documentation": {"@id": "schema:documentation", "@type": "@id"},
+    "repositoryURL": {"@id": "schema:codeRepository", "@type": "@id"},
+    "license": {"@id": "schema:license", "@type": "@id"},
+
+    "tags": {"@id": "schema:keywords", "@container": "@set"},
+    "apis": {"@id": "apis:hasAPI", "@container": "@set"},
+    "properties": {"@id": "apis:properties", "@container": "@set"},
+
+    "GraphQLRuntime": "apis:GraphQLRuntime",
+    "APIGateway": "apis:APIGateway",
+    "CLITool": "apis:CLITool",
+    "AIAssistant": "apis:AIAssistant",
+
+    "tailcall": "https://tailcall.run/vocab#",
+    "directive": "tailcall:directive",
+    "serverDirective": "tailcall:serverDirective",
+    "httpDirective": "tailcall:httpDirective",
+    "upstreamDirective": "tailcall:upstreamDirective",
+    "cacheDirective": "tailcall:cacheDirective",
+    "batchDirective": "tailcall:batchDirective",
+    "graphqlConfiguration": "tailcall:graphqlConfiguration",
+    "nPlusOneDetection": "tailcall:nPlusOneDetection",
+    "requestBatching": "tailcall:requestBatching",
+    "httpCaching": "tailcall:httpCaching",
+    "schemaValidation": "tailcall:schemaValidation",
+
+    "forgecode": "https://forgecode.dev/vocab#",
+    "forgeAgent": "forgecode:forgeAgent",
+    "museAgent": "forgecode:museAgent",
+    "sageAgent": "forgecode:sageAgent",
+    "multiAgentArchitecture": "forgecode:multiAgentArchitecture",
+    "zshIntegration": "forgecode:zshIntegration",
+    "supportedModels": "forgecode:supportedModels",
+    "pricingTier": "forgecode:pricingTier",
+    "contextEngine": "forgecode:contextEngine"
+  },
+  "@graph": [
+    {
+      "@id": "https://tailcall.run",
+      "@type": ["Provider", "schema:Organization"],
+      "name": "Tailcall",
+      "description": "High-performance GraphQL API gateway and runtime built in Rust for composing multiple upstream REST, gRPC, and GraphQL APIs into a unified GraphQL schema.",
+      "url": "https://tailcall.run",
+      "tags": ["GraphQL", "API Gateway", "GraphQL Runtime", "Rust", "Open Source", "API Composition"]
+    },
+    {
+      "@id": "https://tailcall.run/graphql-runtime",
+      "@type": ["API", "GraphQLRuntime", "SoftwareSourceCode"],
+      "name": "Tailcall GraphQL Runtime",
+      "description": "Declarative GraphQL runtime with @server, @http, @upstream, @cache, and @batch directives. Provides N+1 detection, HTTP caching, request batching, and static schema validation.",
+      "humanURL": "https://tailcall.run",
+      "documentation": "https://tailcall.run/docs/",
+      "repositoryURL": "https://github.com/tailcallhq/tailcall",
+      "license": "https://github.com/tailcallhq/tailcall/blob/main/LICENSE",
+      "provider": "https://tailcall.run",
+      "directive": ["@server", "@http", "@upstream", "@cache", "@batch"],
+      "nPlusOneDetection": true,
+      "requestBatching": true,
+      "httpCaching": true,
+      "schemaValidation": "static"
+    },
+    {
+      "@id": "https://forgecode.dev",
+      "@type": ["API", "CLITool", "AIAssistant", "SoftwareApplication"],
+      "name": "ForgeCode",
+      "description": "CLI coding harness from Tailcall Inc supporting 300+ AI models (Claude, GPT, Grok, Gemini, Deepseek) with ZSH integration, multi-agent architecture, and large codebase context engines.",
+      "humanURL": "https://forgecode.dev",
+      "documentation": "https://forgecode.dev/docs/",
+      "repositoryURL": "https://github.com/tailcallhq/forgecode",
+      "provider": "https://tailcall.run",
+      "multiAgentArchitecture": {
+        "forgeAgent": "Primary orchestration agent",
+        "museAgent": "Creative and ideation sub-agent",
+        "sageAgent": "Analysis and reasoning sub-agent"
+      },
+      "zshIntegration": true,
+      "supportedModels": "300+",
+      "pricingTier": [
+        {"name": "Free", "price": "$0/mo"},
+        {"name": "Pro", "price": "$20/mo"},
+        {"name": "Max", "price": "$100/mo"}
+      ]
+    }
+  ]
+}
