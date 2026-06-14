@@ -1,120 +1,115 @@
 aid: tailcall
 name: Tailcall
-description: >-
-  Tailcall is a high-performance GraphQL API gateway and runtime that lets
-  developers compose multiple upstream REST, gRPC, and GraphQL APIs into a
-  unified GraphQL schema. Built in Rust, it offers declarative configuration
-  via .graphql files with directives for HTTP, caching, batching, and security
-  controls. The open-source runtime (Apache 2.0) supports deployment on AWS
-  Lambda, Cloudflare Workers, Docker, and bare metal. Tailcall Inc has
-  subsequently shipped ForgeCode, a CLI coding harness built on the same
-  performance-first ethos.
+description: Tailcall is a high-performance GraphQL API gateway and runtime that lets
+  developers compose multiple upstream REST, gRPC, and GraphQL APIs into a unified
+  GraphQL schema. Built in Rust, it offers declarative configuration via .graphql
+  files with directives for HTTP, caching, batching, and security controls. The open-source
+  runtime (Apache 2.0) supports deployment on AWS Lambda, Cloudflare Workers, Docker,
+  and bare metal. Tailcall Inc has subsequently shipped ForgeCode, a CLI coding harness
+  built on the same performance-first ethos.
 type: Index
 image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
 url: https://raw.githubusercontent.com/api-evangelist/tailcall/refs/heads/main/apis.yml
-created: "2026-06-13"
-modified: "2026-06-13"
-specificationVersion: "0.19"
+created: '2026-06-13'
+modified: '2026-06-13'
+specificationVersion: '0.19'
 tags:
-  - GraphQL
-  - API Gateway
-  - GraphQL Runtime
-  - REST
-  - gRPC
-  - Rust
-  - Open Source
-  - API Composition
-  - Caching
-  - Batching
+- GraphQL
+- API Gateway
+- GraphQL Runtime
+- REST
+- gRPC
+- Rust
+- Open Source
+- API Composition
+- Caching
+- Batching
 apis:
-  - aid: tailcall:tailcall-graphql-runtime
-    name: Tailcall GraphQL Runtime
-    description: >-
-      High-performance GraphQL runtime for composing multiple upstream REST,
-      gRPC, and GraphQL APIs into a unified GraphQL schema. Configuration-driven
-      via declarative .graphql files with @server, @http, @upstream, @cache, and
-      @batch directives. Provides automatic N+1 detection, HTTP caching,
-      request batching, and static schema validation.
-    image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
-    baseURL: https://tailcall.run
-    humanURL: https://tailcall.run
-    overlays: []
-    contact: []
-    properties:
-      - type: Documentation
-        url: https://tailcall.run/docs/
-      - type: GitHubRepository
-        url: https://github.com/tailcallhq/tailcall
-      - type: OpenSource
-        url: https://github.com/tailcallhq/tailcall/blob/main/LICENSE
-      - type: ReleaseNotes
-        url: https://github.com/tailcallhq/tailcall/releases
-      - type: NPMPackage
-        url: https://www.npmjs.com/package/@tailcallhq/tailcall
-      - type: AWSDeployment
-        url: https://github.com/tailcallhq/tailcall-on-aws
-      - type: CLI
-        url: https://tailcall.run/docs/guides/cli/
-    tags:
-      - GraphQL
-      - API Gateway
-      - Open Source
-      - Rust
-      - REST
-      - gRPC
-
-  - aid: tailcall:forgecode-api
-    name: ForgeCode API (Tailcall Inc)
-    description: >-
-      ForgeCode is the commercial CLI coding harness product from Tailcall Inc,
-      positioned as an AI-enabled programming assistant supporting 300+ models
-      (Claude, GPT, Grok, Gemini, Deepseek, and more). Provides ZSH integration,
-      multi-agent architecture (FORGE, MUSE, SAGE sub-agents), and large codebase
-      context engines. Offers Free, Pro ($20/mo), and Max ($100/mo) tiers.
-    image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
-    baseURL: https://forgecode.dev
-    humanURL: https://forgecode.dev
-    overlays: []
-    contact: []
-    properties:
-      - type: Documentation
-        url: https://forgecode.dev/docs/
-      - type: GitHubRepository
-        url: https://github.com/tailcallhq/forgecode
-      - type: Pricing
-        url: https://forgecode.dev/blog/graduating-from-early-access-new-pricing-tiers-available/
-      - type: Blog
-        url: https://forgecode.dev/blog/
-      - type: Discord
-        url: https://discord.gg/kRZBPpkgwq
-    tags:
-      - AI Coding
-      - CLI
-      - Multi-Model
-      - Developer Tools
-
-common:
-  - type: Website
-    url: https://tailcall.run
+- aid: tailcall:tailcall-graphql-runtime
+  name: Tailcall GraphQL Runtime
+  description: High-performance GraphQL runtime for composing multiple upstream REST,
+    gRPC, and GraphQL APIs into a unified GraphQL schema. Configuration-driven via
+    declarative .graphql files with @server, @http, @upstream, @cache, and @batch
+    directives. Provides automatic N+1 detection, HTTP caching, request batching,
+    and static schema validation.
+  image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+  baseURL: https://tailcall.run
+  humanURL: https://tailcall.run
+  overlays: []
+  contact: []
+  properties:
   - type: Documentation
     url: https://tailcall.run/docs/
-  - type: GitHubOrg
-    url: https://github.com/tailcallhq
-  - type: LinkedIn
-    url: https://www.linkedin.com/company/tailcall
+  - type: GitHubRepository
+    url: https://github.com/tailcallhq/tailcall
+  - type: OpenSource
+    url: https://github.com/tailcallhq/tailcall/blob/main/LICENSE
+  - type: ReleaseNotes
+    url: https://github.com/tailcallhq/tailcall/releases
+  - type: NPMPackage
+    url: https://www.npmjs.com/package/@tailcallhq/tailcall
+  - type: AWSDeployment
+    url: https://github.com/tailcallhq/tailcall-on-aws
+  - type: CLI
+    url: https://tailcall.run/docs/guides/cli/
+  - url: graphql/tailcall-graphql.md
+    type: GraphQL
+  tags:
+  - GraphQL
+  - API Gateway
+  - Open Source
+  - Rust
+  - REST
+  - gRPC
+- aid: tailcall:forgecode-api
+  name: ForgeCode API (Tailcall Inc)
+  description: ForgeCode is the commercial CLI coding harness product from Tailcall
+    Inc, positioned as an AI-enabled programming assistant supporting 300+ models
+    (Claude, GPT, Grok, Gemini, Deepseek, and more). Provides ZSH integration, multi-agent
+    architecture (FORGE, MUSE, SAGE sub-agents), and large codebase context engines.
+    Offers Free, Pro ($20/mo), and Max ($100/mo) tiers.
+  image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+  baseURL: https://forgecode.dev
+  humanURL: https://forgecode.dev
+  overlays: []
+  contact: []
+  properties:
+  - type: Documentation
+    url: https://forgecode.dev/docs/
+  - type: GitHubRepository
+    url: https://github.com/tailcallhq/forgecode
+  - type: Pricing
+    url: https://forgecode.dev/blog/graduating-from-early-access-new-pricing-tiers-available/
   - type: Blog
     url: https://forgecode.dev/blog/
-  - type: X
-    url: https://x.com/tailcallhq
   - type: Discord
     url: https://discord.gg/kRZBPpkgwq
-  - type: Plans
-    url: plans/tailcall-plans-pricing.yml
-  - type: RateLimits
-    url: rate-limits/tailcall-rate-limits.yml
-  - type: FinOps
-    url: finops/tailcall-finops.yml
-
+  tags:
+  - AI Coding
+  - CLI
+  - Multi-Model
+  - Developer Tools
+common:
+- type: Website
+  url: https://tailcall.run
+- type: Documentation
+  url: https://tailcall.run/docs/
+- type: GitHubOrg
+  url: https://github.com/tailcallhq
+- type: LinkedIn
+  url: https://www.linkedin.com/company/tailcall
+- type: Blog
+  url: https://forgecode.dev/blog/
+- type: X
+  url: https://x.com/tailcallhq
+- type: Discord
+  url: https://discord.gg/kRZBPpkgwq
+- type: Plans
+  url: plans/tailcall-plans-pricing.yml
+- type: RateLimits
+  url: rate-limits/tailcall-rate-limits.yml
+- type: FinOps
+  url: finops/tailcall-finops.yml
 maintainers:
-  - FN: Kin Lane
-    email: kin@apievangelist.com
+- FN: Kin Lane
+  email: kin@apievangelist.com

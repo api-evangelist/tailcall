@@ -1,0 +1,529 @@
+"""
+Tailcall GraphQL Runtime — Directive Vocabulary SDL
+Source: https://github.com/tailcallhq/tailcall (Apache 2.0)
+
+Tailcall is a self-hosted GraphQL gateway. It generates a unified schema at
+startup from declarative .graphql configuration files. The directives below
+are the complete set of Tailcall-specific directives that extend standard SDL.
+They bind GraphQL fields and types to upstream REST, gRPC, and GraphQL services.
+"""
+
+# ---------------------------------------------------------------------------
+# Scalar types
+# ---------------------------------------------------------------------------
+
+"""Opaque JSON value (any valid JSON — object, array, scalar)."""
+scalar JSON
+
+"""Integer representing a duration in milliseconds."""
+scalar Milliseconds
+
+# ---------------------------------------------------------------------------
+# Enums
+# ---------------------------------------------------------------------------
+
+"""HTTP methods supported by the @http directive."""
+enum HttpMethod {
+  GET
+  POST
+  PUT
+  DELETE
+  PATCH
+  HEAD
+  OPTIONS
+  CONNECT
+  TRACE
+}
+
+"""HTTP protocol version for the @server directive."""
+enum HttpVersion {
+  HTTP1
+  HTTP2
+}
+
+"""
+Type of external resource imported by the @link directive.
+"""
+enum LinkType {
+  """Another Tailcall .graphql config file to be merged."""
+  Config
+  """A .proto file used by the @grpc directive."""
+  Protobuf
+  """A JavaScript (.js) file used by the @js directive."""
+  Script
+  """A TLS certificate file for HTTPS."""
+  Cert
+  """A TLS key file for HTTPS."""
+  Key
+  """A trusted-document file exposing GraphQL operations as REST via @rest."""
+  Operation
+  """An htpasswd file for basic-auth user authentication."""
+  Htpasswd
+  """A JWKS (JSON Web Key Set) file for JWT-based field-level auth."""
+  Jwks
+  """A gRPC reflection endpoint (alternative to a .proto file)."""
+  Grpc
+}
+
+# ---------------------------------------------------------------------------
+# Input types (used as directive argument types)
+# ---------------------------------------------------------------------------
+
+"""A key-value pair used in headers, query params, and vars."""
+input KeyValue {
+  key: String!
+  value: String!
+}
+
+"""A URL query parameter definition (optionally skippable when null)."""
+input URLQuery {
+  key: String!
+  value: String!
+  """If true, omit this query parameter when its value is null."""
+  skipEmpty: Boolean
+}
+
+"""Batch settings for upstream request batching."""
+input Batch {
+  """Maximum number of requests to include in a single batch. Default: 100."""
+  maxSize: Int
+  """Delay in milliseconds between batch windows. Default: 0."""
+  delay: Int
+  """HTTP headers whose values must match for requests to be co-batched."""
+  headers: [String!]
+}
+
+"""HTTP proxy configuration."""
+input Proxy {
+  """Proxy server URL."""
+  url: String!
+}
+
+"""Response headers emitted by the server."""
+input Headers {
+  """Static headers added to every server response."""
+  custom: [KeyValue!]
+  """Forward upstream Cache-Control headers to the client."""
+  cacheControl: Boolean
+  """CORS configuration for response headers."""
+  cors: Cors
+}
+
+"""CORS configuration applied by the @server directive."""
+input Cors {
+  allowCredentials: Boolean
+  allowHeaders: [String!]
+  allowMethods: [HttpMethod!]
+  allowOrigins: [String!]
+  allowPrivateNetwork: Boolean
+  exposeHeaders: [String!]
+  maxAge: Int
+  vary: [String!]
+}
+
+"""Route path overrides for the Tailcall HTTP server."""
+input Routes {
+  """Path for the health/status endpoint. Default: /status"""
+  status: String
+  """Path for the GraphQL endpoint. Default: /graphql"""
+  graphQL: String
+}
+
+"""Script options for request/response interception hooks."""
+input ScriptOptions {
+  timeout: Int
+}
+
+# ---------------------------------------------------------------------------
+# Schema-level directives
+# ---------------------------------------------------------------------------
+
+"""
+Configure the Tailcall GraphQL server. Applied once at the schema level.
+
+@server controls global server behaviour including port, introspection,
+batching, response validation, timeouts, CORS, and HTTP version.
+"""
+directive @server(
+  """Port the server listens on. Default: 8000."""
+  port: Int
+  """Server hostname."""
+  hostname: String
+  """Enable or disable GraphQL introspection. Default: true."""
+  introspection: Boolean
+  """
+  Enable batching of multiple GraphQL requests into a single HTTP request.
+  Default: false.
+  """
+  batchRequests: Boolean
+  """Enable Apollo Tracing headers in responses. Default: false."""
+  apolloTracing: Boolean
+  """
+  Maximum milliseconds a query may run before it is terminated.
+  """
+  globalResponseTimeout: Int
+  """Validate incoming GraphQL queries against the schema. Default: false."""
+  queryValidation: Boolean
+  """
+  Validate upstream responses against the inferred schema. Default: false.
+  """
+  responseValidation: Boolean
+  """HTTP version used by the server. Default: HTTP1."""
+  version: HttpVersion
+  """Number of Tokio worker threads. Default: number of CPU cores."""
+  workers: Int
+  """Enable the /showcase/graphql demo endpoint. Default: false."""
+  showcase: Boolean
+  """Enable Apollo Federation subgraph support. Default: false."""
+  enableFederation: Boolean
+  """
+  Server-level variables (key-value pairs) available to Mustache templates.
+  """
+  vars: [KeyValue!]
+  """Default headers appended to every server response."""
+  headers: Headers
+  """Path overrides for the server's built-in endpoints."""
+  routes: Routes
+  """Path to a JS file for request/response event hooks."""
+  script: ScriptOptions
+) on SCHEMA
+
+"""
+Configure global upstream connection behaviour. Applied once at the schema level.
+
+Controls HTTP caching, keep-alive settings, connection pool limits, request
+batching, proxy, and which inbound headers are forwarded upstream.
+"""
+directive @upstream(
+  """
+  Set the upstream HTTP cache capacity (number of entries).
+  Enables RFC 7234-compliant HTTP caching when > 0. Default: 0 (disabled).
+  """
+  httpCache: Int
+  """
+  HTTP headers from inbound client requests that are forwarded to upstream
+  services. If unset, no headers are forwarded.
+  """
+  allowedHeaders: [String!]
+  """
+  Batch settings that apply to all @http, @grpc, and @graphQL resolvers unless
+  overridden at the field level.
+  """
+  batch: Batch
+  """Connection timeout in seconds."""
+  connectTimeout: Int
+  """Force HTTP/2 for all upstream requests. Auto-enabled for gRPC. Default: false."""
+  http2Only: Boolean
+  """Interval in seconds between TCP keep-alive probes."""
+  keepAliveInterval: Int
+  """Timeout in seconds waiting for a keep-alive response before closing."""
+  keepAliveTimeout: Int
+  """Send keep-alive probes on idle connections. Default: false."""
+  keepAliveWhileIdle: Boolean
+  """Maximum number of idle connections per host in the connection pool."""
+  poolMaxIdlePerHost: Int
+  """Timeout in seconds before idle pooled connections are closed."""
+  poolIdleTimeout: Int
+  """HTTP proxy through which upstream requests are routed."""
+  proxy: Proxy
+  """TCP keep-alive interval in seconds."""
+  tcpKeepAlive: Int
+  """Total request timeout in seconds."""
+  timeout: Int
+  """Value of the User-Agent header sent to upstream services. Default: Tailcall/1.0."""
+  userAgent: String
+  """Verify TLS certificates for upstream connections. Default: true."""
+  verifySSL: Boolean
+  """Name of a global JS function called before each upstream request."""
+  onRequest: String
+) on SCHEMA
+
+"""
+Import external resources into the Tailcall configuration.
+
+Repeatable. Used to import .proto files for gRPC, other config files, JS
+scripts, TLS certs/keys, htpasswd files, JWKS files, and trusted-operation
+documents.
+"""
+directive @link(
+  """Optional identifier referenced by other directives (e.g. @grpc)."""
+  id: String
+  """URL or file path (relative to the importing file) of the resource."""
+  src: String!
+  """Resource type. Default: Config."""
+  type: LinkType
+  """Custom HTTP headers sent when fetching a gRPC reflection endpoint."""
+  headers: [KeyValue!]
+  """Additional metadata attached to the resource."""
+  meta: JSON
+  """Proto include paths for resolving Protobuf imports."""
+  protoPaths: [String!]
+) repeatable on SCHEMA
+
+"""
+Enable OpenTelemetry instrumentation. Applied once at the schema level.
+"""
+directive @telemetry(
+  """OpenTelemetry export target configuration (JSON object)."""
+  export: JSON
+) on SCHEMA
+
+# ---------------------------------------------------------------------------
+# Field / Object directives  (resolvers)
+# ---------------------------------------------------------------------------
+
+"""
+Bind a GraphQL field to a REST API endpoint. Repeatable.
+
+The most commonly used Tailcall directive. Supports GET/POST/PUT/DELETE/PATCH
+methods, Mustache-based URL templates, header forwarding, query-parameter
+injection, response-body transformation (select), and N+1 batching (batchKey).
+"""
+directive @http(
+  """
+  URL of the upstream REST API endpoint.
+  Supports Mustache templates: e.g. "https://api.example.com/users/{{.value.id}}"
+  """
+  url: String!
+  """HTTP method. Default: GET."""
+  method: HttpMethod
+  """
+  Request body for POST/PUT/PATCH requests.
+  Accepts a static JSON object or a Mustache template string.
+  """
+  body: JSON
+  """Custom HTTP headers forwarded to the upstream service."""
+  headers: [KeyValue!]
+  """
+  Query parameters appended to the URL.
+  The first parameter using a Mustache reference to the current value is
+  automatically selected as the batching key.
+  """
+  query: [URLQuery!]
+  """
+  JSON path used to group batched response items back to their requesting keys.
+  Enables Tailcall's automatic N+1 batch resolution.
+  Example: ["id"] maps each response object's .id back to the batch key.
+  """
+  batchKey: [String!]
+  """
+  Suppress duplicate concurrent requests for the same arguments.
+  Caution: may cause issues with nonce-based or side-effectful APIs.
+  """
+  dedupe: Boolean
+  """
+  Mustache expression to reshape the upstream response before it is returned.
+  Example: "{{.user.items}}" extracts a nested array.
+  """
+  select: JSON
+  """
+  Request body encoding. ApplicationJson (default) or ApplicationXWwwFormUrlEncoded.
+  """
+  encoding: String
+  """Name of a JS function called before the upstream HTTP request is sent."""
+  onRequest: String
+  """Name of a JS function called after the upstream response body is received."""
+  onResponseBody: String
+  """Inlined JSON Schema describing the expected input shape (auto-inferred if omitted)."""
+  input: JSON
+  """Inlined JSON Schema describing the expected output shape (auto-inferred if omitted)."""
+  output: JSON
+) repeatable on FIELD_DEFINITION | OBJECT
+
+"""
+Bind a GraphQL field to a gRPC method. Repeatable.
+
+Requires the corresponding .proto file to be imported via @link(type: Protobuf)
+or a gRPC reflection endpoint via @link(type: Grpc). Tailcall automatically
+serialises/deserialises protobuf messages.
+"""
+directive @grpc(
+  """
+  URL of the gRPC server.
+  Example: "https://grpc.example.com"
+  """
+  url: String!
+  """
+  Fully-qualified gRPC method in "Package.Service/Method" notation.
+  Example: "news.NewsService/GetAllNews"
+  """
+  method: String!
+  """
+  Request body (protobuf-serialised from this JSON value).
+  Supports Mustache templates.
+  """
+  body: JSON
+  """Custom headers forwarded to the gRPC server. content-type is set automatically."""
+  headers: [KeyValue!]
+  """JSON path used to group batched response items. Enables N+1 batching."""
+  batchKey: [String!]
+  """Suppress duplicate concurrent gRPC requests for the same arguments."""
+  dedupe: Boolean
+  """Mustache expression to reshape the response before it is returned."""
+  select: JSON
+  """Name of a JS function called after the upstream response body is received."""
+  onResponseBody: String
+) repeatable on FIELD_DEFINITION | OBJECT
+
+"""
+Bind a GraphQL field to a field on an upstream GraphQL server. Repeatable.
+
+Tailcall translates the incoming query into a downstream GraphQL request and
+merges the result into the local schema. Supports upstream batch-query mode
+to collapse multiple requests into a single round trip.
+"""
+directive @graphQL(
+  """URL of the upstream GraphQL server."""
+  url: String!
+  """
+  Name of the field on the upstream schema to request.
+  Maps the local field to the upstream field name.
+  """
+  name: String!
+  """Named arguments forwarded to the upstream field."""
+  args: [KeyValue!]
+  """Custom headers forwarded to the upstream GraphQL server."""
+  headers: [KeyValue!]
+  """
+  Enable upstream batch-query support. When true, multiple field requests are
+  combined into a single upstream GraphQL request. The @upstream batch settings
+  must also be configured.
+  """
+  batch: Boolean
+  """Suppress duplicate concurrent upstream GraphQL requests."""
+  dedupe: Boolean
+) repeatable on FIELD_DEFINITION | OBJECT
+
+"""
+Enable response caching for a field or object type.
+
+maxAge is specified in milliseconds. Cached responses are stored in-process
+and served for subsequent identical requests within the TTL.
+"""
+directive @cache(
+  """Cache time-to-live in milliseconds. Must be greater than 0."""
+  maxAge: Int!
+) on FIELD_DEFINITION | OBJECT
+
+"""
+Return a constant inline value for a field without making any upstream call.
+
+Useful for mocking, default values, and static data fields.
+"""
+directive @const(
+  """The static data to return. Can be any JSON value."""
+  data: JSON!
+) on FIELD_DEFINITION | OBJECT
+
+"""
+Modify how a field is exposed in the generated GraphQL schema.
+
+Use `name` to rename a field or `omit` to exclude it from the schema entirely.
+"""
+directive @modify(
+  """Rename the field in the schema to this value."""
+  name: String
+  """If true, hide this field from the schema."""
+  omit: Boolean
+) on FIELD_DEFINITION
+
+"""
+Flatten a deeply-nested field path to the top level of a type.
+
+The `path` argument is a dot-separated list of field names leading to the
+value that should appear directly on the parent type.
+"""
+directive @addField(
+  """The name of the new flattened field on the parent type."""
+  name: String!
+  """
+  Dot-separated path from the parent type to the nested value.
+  Example: ["user", "address", "city"] flattens .user.address.city.
+  """
+  path: [String!]!
+) on OBJECT
+
+"""
+Mark a field or type as requiring authentication.
+
+Works in conjunction with a @link(type: Jwks) or @link(type: Htpasswd)
+import. Unauthenticated requests to protected fields receive an auth error.
+"""
+directive @protected on FIELD_DEFINITION | OBJECT
+
+"""
+Bind a field to a JavaScript function defined in a @link(type: Script) file.
+
+The named function receives the GraphQL resolver arguments and must return
+the field value.
+"""
+directive @js(
+  """Name of the exported JS function to invoke."""
+  name: String!
+) on FIELD_DEFINITION | OBJECT
+
+"""
+Re-use the resolver of another query or mutation field.
+
+Avoids duplication when multiple fields share identical upstream resolution
+logic. The `steps` list specifies the chain of fields to delegate through.
+"""
+directive @call(
+  """
+  Chain of query/mutation field steps to delegate to.
+  Each step is a key-value pair: { query: "fieldName" } or { mutation: "fieldName" }.
+  """
+  steps: [JSON!]!
+) on FIELD_DEFINITION | OBJECT
+
+# ---------------------------------------------------------------------------
+# Example schema (illustrative — not a deployed endpoint)
+# ---------------------------------------------------------------------------
+
+"""
+Schema showing how Tailcall directives compose REST and gRPC upstreams.
+This is an illustrative example drawn from the official Tailcall documentation.
+"""
+schema
+  @server(port: 8000, introspection: true)
+  @upstream(
+    httpCache: 42
+    allowedHeaders: ["Authorization"]
+    batch: { maxSize: 100, delay: 10 }
+  ) {
+  query: Query
+}
+
+type Query {
+  """Fetch all users from a REST upstream."""
+  users: [User]
+    @http(url: "https://jsonplaceholder.typicode.com/users")
+
+  """Fetch a single user by id."""
+  user(id: Int!): User
+    @http(url: "https://jsonplaceholder.typicode.com/users/{{.args.id}}")
+
+  """Fetch posts, resolved via a linked upstream GraphQL service."""
+  posts: [Post]
+    @graphQL(url: "https://upstream.example.com/graphql", name: "posts")
+}
+
+type User {
+  id: Int!
+  name: String!
+  email: String!
+  """Nested posts resolved per-user with automatic N+1 batching."""
+  posts: [Post]
+    @http(
+      url: "https://jsonplaceholder.typicode.com/posts"
+      query: [{ key: "userId", value: "{{.value.id}}" }]
+    )
+    @cache(maxAge: 60000)
+}
+
+type Post {
+  id: Int!
+  title: String!
+  body: String!
+  userId: Int!
+}
