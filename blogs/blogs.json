@@ -1,7 +1,7 @@
 {
   "provider": "tailcall",
   "blog_url": "https://forgecode.dev/blog/",
-  "fetched": "2026-06-13",
+  "fetched": "2026-06-14T20:42:17Z",
   "posts": [
     {
       "title": "How to Use Novita AI in ForgeCode: Quick Guide",
@@ -11,18 +11,18 @@
       "summary": "Guide to integrating Novita AI as a provider in ForgeCode (v2.2.2+), covering API key creation, :login setup, and model selection including Kimi K2.5, GLM-5, and MiniMax M2.5."
     },
     {
-      "title": "Benchmarks Don't Matter — Until They Do (Part 2)",
+      "title": "Benchmarks Don't Matter \u2014 Until They Do (Part 2)",
       "url": "https://forgecode.dev/blog/gpt-5-4-agent-improvements/",
       "date": "2026-03-16",
       "author": "ForgeCode Team",
       "summary": "Continuation of the TermBench 2.0 improvement series examining further runtime harness optimizations and model comparisons."
     },
     {
-      "title": "Benchmarks Don't Matter — Until They Do (Part 1)",
+      "title": "Benchmarks Don't Matter \u2014 Until They Do (Part 1)",
       "url": "https://forgecode.dev/blog/benchmarks-dont-matter/",
       "date": "2026-03-03",
       "author": "Tushar",
-      "summary": "Documents how ForgeCode improved from 25% to 78.4% pass rate on TermBench 2.0 through harness optimizations — non-interactive behavior, tool-call naming conventions, planning state enforcement, and progressive reasoning budgets — without model changes."
+      "summary": "Documents how ForgeCode improved from 25% to 78.4% pass rate on TermBench 2.0 through harness optimizations \u2014 non-interactive behavior, tool-call naming conventions, planning state enforcement, and progressive reasoning budgets \u2014 without model changes."
     },
     {
       "title": "ForgeCode v0.106.0 Release: Plan Progress Tracking and Reliability Improvements",
@@ -87,5 +87,20 @@
       "author": "ForgeCode Team",
       "summary": "In-depth comparison of Claude 4 Opus and Grok 4 on complex coding tasks using ForgeCode as the evaluation harness."
     }
-  ]
+  ],
+  "repo": "tailcall",
+  "feeds": [
+    {
+      "source": "https://forgecode.dev/blog/graduating-from-early-access-new-pricing-tiers-available/",
+      "feed_url": "https://forgecode.dev/blog/rss.xml",
+      "title": "",
+      "saved": 0,
+      "method": "discovered"
+    },
+    {
+      "source": "https://www.linkedin.com/company/tailcall",
+      "error": "HTTPError"
+    }
+  ],
+  "post_count": 0
 }
