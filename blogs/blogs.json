@@ -1,95 +1,13 @@
 {
-  "provider": "tailcall",
-  "blog_url": "https://forgecode.dev/blog/",
-  "fetched": "2026-06-14T20:42:17Z",
-  "posts": [
-    {
-      "title": "How to Use Novita AI in ForgeCode: Quick Guide",
-      "url": "https://forgecode.dev/blog/use-novita-ai-api-in-forgecode/",
-      "date": "2026-03-28",
-      "author": "ForgeCode Team",
-      "summary": "Guide to integrating Novita AI as a provider in ForgeCode (v2.2.2+), covering API key creation, :login setup, and model selection including Kimi K2.5, GLM-5, and MiniMax M2.5."
-    },
-    {
-      "title": "Benchmarks Don't Matter \u2014 Until They Do (Part 2)",
-      "url": "https://forgecode.dev/blog/gpt-5-4-agent-improvements/",
-      "date": "2026-03-16",
-      "author": "ForgeCode Team",
-      "summary": "Continuation of the TermBench 2.0 improvement series examining further runtime harness optimizations and model comparisons."
-    },
-    {
-      "title": "Benchmarks Don't Matter \u2014 Until They Do (Part 1)",
-      "url": "https://forgecode.dev/blog/benchmarks-dont-matter/",
-      "date": "2026-03-03",
-      "author": "Tushar",
-      "summary": "Documents how ForgeCode improved from 25% to 78.4% pass rate on TermBench 2.0 through harness optimizations \u2014 non-interactive behavior, tool-call naming conventions, planning state enforcement, and progressive reasoning budgets \u2014 without model changes."
-    },
-    {
-      "title": "ForgeCode v0.106.0 Release: Plan Progress Tracking and Reliability Improvements",
-      "url": "https://forgecode.dev/blog/forge-v0106-release/",
-      "date": "2025-08-13",
-      "author": "ForgeCode Team",
-      "summary": "Release notes for v0.106.0 covering plan progress tracking features and reliability improvements."
-    },
-    {
-      "title": "Coding Agents Showdown: VSCode Forks vs. IDE Extensions vs. CLI Agents",
-      "url": "https://forgecode.dev/blog/coding-agents-showdown/",
-      "date": "2025-08-12",
-      "author": "Tushar",
-      "summary": "Comparative analysis of VSCode forks (Cursor), IDE extensions, and CLI agents like ForgeCode, examining trade-offs in integration depth, security constraints, and system-level access for AI-assisted development."
-    },
-    {
-      "title": "Claude Sonnet 4 vs Kimi K2 vs Gemini 2.5 Pro: Which AI actually ships production code?",
-      "url": "https://forgecode.dev/blog/kimi-k2-vs-sonnet-4-vs-gemini-2.5-pro/",
-      "date": "2025-08-10",
-      "author": "ForgeCode Team",
-      "summary": "Head-to-head comparison of Claude Sonnet 4, Kimi K2, and Gemini 2.5 Pro on production coding tasks run through the ForgeCode harness."
-    },
-    {
-      "title": "Graduating from Early Access: New Pricing Tiers Now Available",
-      "url": "https://forgecode.dev/blog/graduating-from-early-access-new-pricing-tiers-available/",
-      "date": "2025-07-27",
-      "author": "ForgeCode Team",
-      "summary": "Announcement of ForgeCode's general availability with Free, Pro ($20/mo), and Max ($100/mo) pricing tiers after early-access period."
-    },
-    {
-      "title": "Kimi K2 vs Grok 4: Which AI Model Codes Better?",
-      "url": "https://forgecode.dev/blog/kimi-k2-vs-grok-4-comparison-full/",
-      "date": "2025-07-26",
-      "author": "ForgeCode Team",
-      "summary": "Detailed comparison of Kimi K2 and Grok 4 on coding benchmarks and real-world tasks using ForgeCode."
-    },
-    {
-      "title": "Kimi K2 vs Qwen-3 Coder: Testing Two AI Models on Coding Tasks",
-      "url": "https://forgecode.dev/blog/kimi-k2-vs-qwen-3-coder-coding-comparison/",
-      "date": "2025-07-23",
-      "author": "ForgeCode Team",
-      "summary": "Evaluation of Kimi K2 and Qwen-3 Coder models on practical coding tasks via ForgeCode."
-    },
-    {
-      "title": "ForgeCode Performance RCA: Root Cause Analysis of Quality Degradation on July 12, 2025",
-      "url": "https://forgecode.dev/blog/forge-incident-12-july-2025-rca-2/",
-      "date": "2025-07-18",
-      "author": "ForgeCode Team",
-      "summary": "Post-incident analysis of the quality degradation event on July 12, 2025, covering root cause identification and remediation steps."
-    },
-    {
-      "title": "Grok 4 Initial Impressions: Is xAI's New LLM the Most Intelligent AI Model Yet?",
-      "url": "https://forgecode.dev/blog/grok-4-initial-impression/",
-      "date": "2025-07-17",
-      "author": "ForgeCode Team",
-      "summary": "First impressions and early benchmark results for xAI's Grok 4 model tested through the ForgeCode coding harness."
-    },
-    {
-      "title": "Claude 4 Opus vs Grok 4: Which Model Dominates Complex Coding Tasks?",
-      "url": "https://forgecode.dev/blog/claude-4-opus-vs-grok-4-comparison-full/",
-      "date": "2025-07-10",
-      "author": "ForgeCode Team",
-      "summary": "In-depth comparison of Claude 4 Opus and Grok 4 on complex coding tasks using ForgeCode as the evaluation harness."
-    }
-  ],
   "repo": "tailcall",
   "feeds": [
+    {
+      "source": "https://forgecode.dev/blog/rss.xml",
+      "feed_url": "https://forgecode.dev/blog/rss.xml",
+      "title": "",
+      "saved": 0,
+      "method": "feed"
+    },
     {
       "source": "https://forgecode.dev/blog/graduating-from-early-access-new-pricing-tiers-available/",
       "feed_url": "https://forgecode.dev/blog/rss.xml",
@@ -102,5 +20,6 @@
       "error": "HTTPError"
     }
   ],
+  "fetched": "2026-06-27T12:03:07Z",
   "post_count": 0
 }
