@@ -90,6 +90,8 @@ apis:
   - Multi-Model
   - Developer Tools
 common:
+- type: DomainSecurity
+  url: security/tailcall-domain-security.yml
 - type: Website
   url: https://tailcall.run
 - type: Documentation
