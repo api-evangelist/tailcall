@@ -32,6 +32,17 @@ tags:
 - REST
 - gRPC
 - Rust
+- Open-Source
+- API Composition
+- Caching
+- Batching
+tags_raw:
+- GraphQL
+- API Gateway
+- GraphQL Runtime
+- REST
+- gRPC
+- Rust
 - Open Source
 - API Composition
 - Caching
@@ -67,6 +78,13 @@ apis:
   - url: graphql/tailcall-graphql.md
     type: GraphQL
   tags:
+  - GraphQL
+  - API Gateway
+  - Open-Source
+  - Rust
+  - REST
+  - gRPC
+  tags_raw:
   - GraphQL
   - API Gateway
   - Open Source
