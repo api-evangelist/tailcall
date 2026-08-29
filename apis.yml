@@ -8,6 +8,18 @@ description: Tailcall is a high-performance GraphQL API gateway and runtime that
   and bare metal. Tailcall Inc has subsequently shipped ForgeCode, a CLI coding harness
   built on the same performance-first ethos.
 type: Index
+deliveryModel:
+  model: unknown
+  open_source: unknown
+  commercial: true
+  callable_host: false
+  label: Delivery model not determined — needs a product licence on record
+  confidence: low
+  source:
+  - pricing
+  - repository-unlicensed
+  generated: '2026-08-28'
+  method: derived
 accessModel:
   pricing: freemium
   onboarding: unknown
