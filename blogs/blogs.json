@@ -9,17 +9,20 @@
       "method": "feed"
     },
     {
-      "source": "https://www.linkedin.com/company/tailcall",
-      "error": "HTTPError"
-    },
-    {
       "source": "https://forgecode.dev/blog/graduating-from-early-access-new-pricing-tiers-available/",
       "feed_url": "https://forgecode.dev/blog/rss.xml",
       "title": "",
       "saved": 0,
       "method": "discovered"
+    },
+    {
+      "source": "https://www.linkedin.com/company/tailcall",
+      "feed_url": "https://www.linkedin.com/company/tailcall",
+      "title": "",
+      "saved": 0,
+      "method": "none"
     }
   ],
-  "fetched": "2026-08-22T20:20:02Z",
+  "fetched": "2026-08-30T22:33:40Z",
   "post_count": 20
 }
