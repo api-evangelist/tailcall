@@ -10,10 +10,7 @@
     },
     {
       "source": "https://www.linkedin.com/company/tailcall",
-      "feed_url": "https://www.linkedin.com/company/tailcall",
-      "title": "",
-      "saved": 0,
-      "method": "none"
+      "error": "HTTPError"
     },
     {
       "source": "https://forgecode.dev/blog/rss.xml",
@@ -23,7 +20,7 @@
       "method": "feed"
     }
   ],
-  "fetched": "2026-09-06T19:17:18Z",
+  "fetched": "2026-09-13T13:00:00Z",
   "post_count": 20,
   "feed_nature": "vendor-blog",
   "feed_nature_basis": "path_blog",
