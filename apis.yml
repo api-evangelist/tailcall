@@ -45,7 +45,7 @@ tags:
 - REST
 - gRPC
 - Rust
-- Open-Source
+- Open Source
 - API Composition
 - Caching
 - Batching
@@ -60,6 +60,7 @@ tags_raw:
 - API Composition
 - Caching
 - Batching
+- Open-Source
 apis:
 - aid: tailcall:tailcall-graphql-runtime
   name: Tailcall GraphQL Runtime
@@ -69,7 +70,6 @@ apis:
     directives. Provides automatic N+1 detection, HTTP caching, request batching,
     and static schema validation.
   image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
-  baseURL: https://tailcall.run
   humanURL: https://tailcall.run
   overlays: []
   contact: []
@@ -93,7 +93,7 @@ apis:
   tags:
   - GraphQL
   - API Gateway
-  - Open-Source
+  - Open Source
   - Rust
   - REST
   - gRPC
@@ -104,6 +104,7 @@ apis:
   - Rust
   - REST
   - gRPC
+  - Open-Source
 - aid: tailcall:forgecode-api
   name: ForgeCode API (Tailcall Inc)
   description: ForgeCode is the commercial CLI coding harness product from Tailcall
