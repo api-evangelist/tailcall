@@ -86,3 +86,39 @@ plans:
     rateLimits:
       requests: "5,000 per day"
     url: https://forgecode.dev/blog/graduating-from-early-access-new-pricing-tiers-available/
+x-canonical:
+  generated: '2026-10-08'
+  vocabulary: all/0-working/economics/plans-canonical.yml
+  models:
+  - free
+  - subscription
+  units: []
+  plans:
+  - name: Tailcall GraphQL Runtime (Open Source)
+    access: free
+    model: free
+    model_how: derived
+    units: []
+    periods:
+    - none
+  - name: ForgeCode Free
+    access: free
+    model: free
+    model_how: derived
+    units: []
+    periods:
+    - month
+  - name: ForgeCode Pro
+    access: paid
+    model: subscription
+    model_how: derived
+    units: []
+    periods:
+    - month
+  - name: ForgeCode Max
+    access: paid
+    model: subscription
+    model_how: derived
+    units: []
+    periods:
+    - month
